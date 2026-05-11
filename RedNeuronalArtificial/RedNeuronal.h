@@ -17,5 +17,5 @@ public:
 	void cargarPesosDesdeCadena(const std::string& lineaPesos);
 	void cargarPesosDesdeArchivo(const std::string& nombre_Archivo);
 	void obtenerSalidaRedNeuronal(const std:: string& nombre_Archivo);
-	void guardarEstructuraRedNeuronal(const std::string& nombre_Archivo);
+	void guardarEstructuraRedNeuronal(const std::string& nombre_Archivo) const;
 };
