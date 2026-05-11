@@ -38,7 +38,7 @@ void Neurona::establecerPesosNeurona(const std::vector<double> nuevos_pesos, dou
 * Obtener el valor de salida de la neurona
 */
 
-double Neurona::obtenerSalida(const std::vector<double> entradas)
+double Neurona::obtenerSalida(const std::vector<double> entradas) const
 {
 	double z = 0.0;
 	for (size_t i = 0; i < pesos.size(); i++)

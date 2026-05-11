@@ -63,7 +63,7 @@ void RedNeuronal::cargarPesosDesdeCadena(const std::string& lineaPesos) {
     }
 }
 
-void RedNeuronal::cargarPesosDesdeCadena(const std::string& filename) {
+void RedNeuronal::cargarPesosDesdeArchivo(const std::string& filename) {
     std::ifstream file(filename);
     if (file.is_open()) {
         std::string line;

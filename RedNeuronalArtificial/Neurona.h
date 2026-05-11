@@ -13,7 +13,7 @@ public:
 	Neurona(int numEntradas, Activacion func);
 	void inicializarAleatoriamenteNeurona();
 	void establecerPesosNeurona(const std::vector<double> nuevos_pesos, double nuevo_bias);
-	double obtenerSalida(const std::vector<double> entradas);
+	double obtenerSalida(const std::vector<double> entradas) const;
 	std::vector<double> obtenerPesosNeurona() const;
 	double obtenerBiasNeurona() const;
 };
