@@ -126,7 +126,7 @@
     <ClCompile Include="Capa.cpp" />
     <ClCompile Include="Neurona.cpp" />
     <ClCompile Include="RedNeuronal.cpp" />
-    <ClCompile Include="RedNeuronalArtificial.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Capa.h" />
