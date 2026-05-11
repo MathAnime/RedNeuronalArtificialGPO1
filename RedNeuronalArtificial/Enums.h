@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <algorithm>
+#include <cmath>
 
 enum class Activacion
 {
@@ -67,5 +68,24 @@ inline std::string activacionToString(Activacion act)
 		return "identidad";
 	default:
 		return "desconocida";
+	}
+}
+
+	// NUEVO: Derivada de la función de activación (recibe la salida 'a' de la neurona)
+inline double calcularDerivada(Activacion act, double a)
+{
+	switch (act)
+	{
+	case Activacion::SIGMOIDE:
+		return a * (1.0 - a);
+	case Activacion::TANH:
+		return 1.0 - (a * a);
+	case Activacion::RELU:
+		return (a > 0.0) ? 1.0 : 0.0;
+	case Activacion::IDENTIDAD:
+		return 1.0;
+	case Activacion::ESCALONADA:
+		return 0.0; // Matemáticamente no diferenciable útilmente
+	default: return 0.0;
 	}
 }

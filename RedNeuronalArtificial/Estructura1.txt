@@ -1,0 +1,3 @@
+4
+784 10 10 10
+Identidad Relu RELU tanh

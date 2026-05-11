@@ -9,6 +9,45 @@
 
 using namespace std;
 
+void menuInferencia(RedNeuronal& rn) {
+    int opcion;
+    while (true) {
+        cout << "\n--- SUBMENU: INFERENCIA DE LA RED ---\n"
+            << "1. Entrenar la red neuronal\n"
+            << "2. Medir la eficacia de la red neuronal\n"
+            << "3. Regresar al menu principal\n"
+            << "Seleccione una opcion: ";
+
+        if (!(cin >> opcion)) { cin.clear(); cin.ignore(numeric_limits<streamsize>::max(), '\n'); continue; }
+
+        string carpeta;
+        switch (opcion) {
+        case 1: {
+            cout << "Nombre de la carpeta de entrenamiento: ";
+            cin >> carpeta;
+            double lr;
+            int epocas;
+            cout << "Ingrese la tasa de aprendizaje (ej. 0.01): ";
+            cin >> lr;
+            cout << "Ingrese la cantidad de epocas: ";
+            cin >> epocas;
+            rn.entrenar(carpeta, lr, epocas);
+            break;
+        }
+        case 2:
+            cout << "Nombre de la carpeta de pruebas (Test): ";
+            cin >> carpeta;
+            rn.medirEficiencia(carpeta);
+            break;
+        case 3:
+            return; // Regresa al main
+        default:
+            cout << "Opcion invalida.\n";
+        }
+    }
+}
+
+
 int main() {
     RedNeuronal rn;
     string configFile;
@@ -40,9 +79,7 @@ int main() {
         string filename;
         switch (opcion) {
         case 1:
-            cout << "Archivo de entrada de datos: ";
-            cin >> filename;
-            rn.obtenerSalidaRedNeuronal(filename);
+            menuInferencia(rn);
             break;
         case 2:
             cout << "Archivo de pesos y bias: ";

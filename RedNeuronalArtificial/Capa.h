@@ -14,5 +14,11 @@ public:
 	void inicializarAleatoriamente();
 	void establecerPesosYBias(const std::vector<double>& valores);
 	std::string exportarPesosYBias() const;
-	std::vector<double> salidaCapa(const std::vector<double>& entradas) const;
+	std::vector<double> salidaCapa(std::vector<double>& entradas);
+
+	std::vector<Neurona>& getNeuronas();
+	void calcularDeltasCapaSalida(const std::vector<double>& valoresEsperados);
+	void calcularDeltasCapaOculta(Capa& capaSiguiente);
+	void actualizarPesosCapa(double tasaAprendizaje);
+
 };

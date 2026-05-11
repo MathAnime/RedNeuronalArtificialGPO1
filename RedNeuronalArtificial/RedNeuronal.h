@@ -18,4 +18,12 @@ public:
 	void cargarPesosDesdeArchivo(const std::string& nombre_Archivo);
 	void obtenerSalidaRedNeuronal(const std:: string& nombre_Archivo);
 	void guardarEstructuraRedNeuronal(const std::string& nombre_Archivo) const;
+
+	// Utilidad para leer archivos binarios generados desde numpy
+	bool cargarDatosBinarios(const std::string& ruta, std::vector<std::vector<double>>& datos, int tamañoVector);
+
+	// Nuevas funcionalidades del menú
+	void entrenar(const std::string& carpetaDatos, double tasaAprendizaje, int epocas);
+	void medirEficiencia(const std::string& carpetaTest);
+
 };

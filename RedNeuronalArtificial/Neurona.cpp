@@ -38,32 +38,38 @@ void Neurona::establecerPesosNeurona(const std::vector<double> nuevos_pesos, dou
 * Obtener el valor de salida de la neurona
 */
 
-double Neurona::obtenerSalida(const std::vector<double> entradas) const
+double Neurona::obtenerSalida(std::vector<double> entradas)
 {
-	double z = 0.0;
+	ultimasEntradas = entradas;		//Se almacena para el Backpropagation
+	double z = bias;
 	for (size_t i = 0; i < pesos.size(); i++)
 	{
 		z += pesos[i] * entradas[i];
 	}
 
-	z += bias;
-
 	switch (funcionTransferencia)
 	{
 	case Activacion::ESCALONADA:
-		return (z < 0) ? 0.0 : 1.0;
+		ultimaSalida = (z < 0) ? 0.0 : 1.0;
+		break;
 	case Activacion::IDENTIDAD:
-		return z;
+		ultimaSalida = z;
+		break;
 	case Activacion::RELU:
-		return (z < 0) ? 0.0 : z;
+		ultimaSalida = (z < 0) ? 0.0 : z;
+		break;
 	case Activacion::SIGMOIDE:
-		return 1.0 / (1.0 + exp(-z));
+		ultimaSalida = 1.0 / (1.0 + exp(-z));
+		break;
 	case Activacion::TANH:
-		return tanh(z);
+		ultimaSalida = tanh(z);
+		break;
 	default:
-		return 0.0;
+		ultimaSalida = 0.0;
+		break;
 
 	}
+	return ultimaSalida;
 }
 
 std::vector<double> Neurona::obtenerPesosNeurona() const
@@ -74,4 +80,23 @@ std::vector<double> Neurona::obtenerPesosNeurona() const
 double Neurona::obtenerBiasNeurona() const
 {
 	return bias;
+}
+
+// Calcula el error si esta neurona está en la última capa
+void Neurona::calcularDeltaSalida(double valorEsperado) {
+	double error = valorEsperado - ultimaSalida; // MSE derivado
+	delta = error * calcularDerivada(funcionTransferencia, ultimaSalida);
+}
+
+// Calcula el error si esta neurona está en una capa oculta
+void Neurona::calcularDeltaOculta(double sumaDeltasSiguienteCapa) {
+	delta = sumaDeltasSiguienteCapa * calcularDerivada(funcionTransferencia, ultimaSalida);
+}
+
+// Aplica el Descenso del Gradiente
+void Neurona::actualizarPesos(double tasaAprendizaje) {
+	for (size_t i = 0; i < pesos.size(); ++i) {
+		pesos[i] += tasaAprendizaje * delta * ultimasEntradas[i];
+	}
+	bias += tasaAprendizaje * delta; // La entrada del bias siempre es 1
 }

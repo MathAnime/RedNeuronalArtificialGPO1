@@ -78,12 +78,48 @@ std::string Capa::exportarPesosYBias() const
 /*
 * Metodo que permite obtener el valor de salida de la capa
 */
-std::vector<double> Capa::salidaCapa(const std::vector<double>& entradas) const
+std::vector<double> Capa::salidaCapa(std::vector<double>& entradas)
 {
 	std::vector<double> salidas;
-	for (const auto& n : neuronas)
+	for (auto& n : neuronas)
 	{
 		salidas.push_back(n.obtenerSalida(entradas));
 	}
 	return salidas;
+}
+
+
+std::vector<Neurona>& Capa::getNeuronas()
+{
+	return neuronas;
+}
+void Capa::calcularDeltasCapaSalida(const std::vector<double>& valoresEsperados)
+{
+	for (size_t i = 0; i < neuronas.size(); ++i)
+	{
+		neuronas[i].calcularDeltaSalida(valoresEsperados[i]);
+	}
+}
+void Capa::calcularDeltasCapaOculta(Capa& capaSiguiente)
+{
+	std::vector<Neurona>& neuronasSig = capaSiguiente.getNeuronas();
+	for (size_t i = 0; i < neuronas.size(); ++i)
+	{
+		double sumaDeltas = 0.0;
+		// Multiplicar el delta de la capa siguiente por los pesos que conectan con esta neurona
+		for (size_t j = 0; j < neuronasSig.size(); ++j)
+		{
+			sumaDeltas += neuronasSig[j].obtenerPesosNeurona()[i] * neuronasSig[j].getDelta();
+		}
+		neuronas[i].calcularDeltaOculta(sumaDeltas);
+	}
+
+}
+void Capa::actualizarPesosCapa(double tasaAprendizaje)
+{
+	for (auto& n : neuronas)
+	{
+		n.actualizarPesos(tasaAprendizaje);
+	}
+
 }
